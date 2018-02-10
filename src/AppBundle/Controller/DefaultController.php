@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,17 +42,21 @@ class DefaultController extends Controller
      */
     public function showAction(Post $post, Request $request){
 
-        $form = $this->createForm(CommentType::class);
+        //$comment->setUser($user);
+        $comment = new Comment();
+        $comment->setPost($post);
+
+        $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if($form->isValid()){
 
-            $this->getDoctrine()->getManager();
-            $this->persist($comment);
-            $this->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
 
             $this->addFlash('success','Komentarz został pomyślnie dodany');
-            return $this->redirectToRoute('post_show',array('id'=>$pos->getId()));
+            return $this->redirectToRoute('post_show',array('id' => $post->getId()));
         }
 
         return $this->render('default/show.html.twig', array(

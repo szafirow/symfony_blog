@@ -40,7 +40,6 @@ class Comment
      * @var type
      *
      * @ORM\ManyToOne(targetEntity="Post",inversedBy="comments")
-     * @ORM\JoinColumn(name="user_id", nullable=true)
      */
     private $post;
 
@@ -48,8 +47,15 @@ class Comment
      * @var type
      *
      * @ORM\ManyToOne(targetEntity="User",inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", nullable=true)
      */
     private $user;
+
+
+    public function __construct()
+    {
+        $this->createdAt = new\DateTime("now");
+    }
 
     /**
      * Get id

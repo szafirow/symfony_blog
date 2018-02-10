@@ -8,18 +8,23 @@
         <p>{{ post.content }}</p>
         <span>Dodano {{ post.createdAt|date('H:i d/m/Y') }}</span>
 
-
         <hr/>
 
         <h3>Komentarze</h3>
 
         {{ form_start(form) }}
-
              {{ form_widget(form) }}
-
         <button class="btn btn-primary float-right">Dodaj komentarz</button>
-
         {{ form_end(form) }}
+
+
+
+        {% for comment in post.comments %}
+            <p>{{ comment.content }}</p>
+            <span>Dodano {{ comment.createdAt|date('H:i d/m/Y') }}</span>
+        {% endfor %}
+
+         <hr/>
 
     </div>
 
