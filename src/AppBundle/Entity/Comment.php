@@ -40,7 +40,7 @@ class Comment
      * @var type
      *
      * @ORM\ManyToOne(targetEntity="Post",inversedBy="comments")
-     * @ORM\JoinColumn(name="user_id", nullable="true")
+     * @ORM\JoinColumn(name="user_id", nullable=true)
      */
     private $post;
 
