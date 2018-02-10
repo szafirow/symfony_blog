@@ -39,9 +39,21 @@ class DefaultController extends Controller
     /**
      * @Route("/article/{id}" , name="post_show")
      */
-    public function showAction(Post $post){
+    public function showAction(Post $post, Request $request){
 
         $form = $this->createForm(CommentType::class);
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+
+            $this->getDoctrine()->getManager();
+            $this->persist($comment);
+            $this->flush();
+
+            $this->addFlash('success','Komentarz został pomyślnie dodany');
+            return $this->redirectToRoute('post_show',array('id'=>$pos->getId()));
+        }
+
         return $this->render('default/show.html.twig', array(
             'post' => $post,
             'form' => $form->createView()
