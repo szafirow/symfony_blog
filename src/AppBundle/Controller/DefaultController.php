@@ -20,14 +20,14 @@ class DefaultController extends Controller
         $qb = $this->getDoctrine()
             ->getManager()
             ->createQueryBuilder()
-            ->from('AppBundle:Post','p')
+            ->from('AppBundle:Post', 'p')
             ->select('p');
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-          $qb,
-          $request->query->get('page',1),
-          20
+            $qb,
+            $request->query->get('page', 1),
+            20
         );
 
 
@@ -40,28 +40,34 @@ class DefaultController extends Controller
     /**
      * @Route("/article/{id}" , name="post_show")
      */
-    public function showAction(Post $post, Request $request){
+    public function showAction(Post $post, Request $request)
+    {
+        $form = null;
 
-        //$comment->setUser($user);
-        $comment = new Comment();
-        $comment->setPost($post);
+        //jesli uzytkownik jest zalogowany
+        if ($user = $this->getUser()) {
+            $comment = new Comment();
+            $comment->setPost($post);
+            $comment->setUser($user);
 
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
 
-        if($form->isValid()){
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
+            if ($form->isValid()) {
 
-            $this->addFlash('success','Komentarz został pomyślnie dodany');
-            return $this->redirectToRoute('post_show',array('id' => $post->getId()));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($comment);
+                $em->flush();
+
+                $this->addFlash('success', 'Komentarz został pomyślnie dodany');
+                return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            }
         }
 
         return $this->render('default/show.html.twig', array(
             'post' => $post,
-            'form' => $form->createView()
+            'form' => is_null($form) ? $form : $form->createView()
         ));
     }
 

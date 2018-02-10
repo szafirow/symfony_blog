@@ -12,16 +12,22 @@
 
         <h3>Komentarze</h3>
 
-        {{ form_start(form) }}
-             {{ form_widget(form) }}
-        <button class="btn btn-primary float-right">Dodaj komentarz</button>
-        {{ form_end(form) }}
+        {% if app.user %}
 
+            {{ form_start(form) }}
+                 {{ form_widget(form) }}
+            <button class="btn btn-primary float-right">Dodaj komentarz</button>
+            {{ form_end(form) }}
 
+        {% else %}
+
+            <p>Komentarze mogą być dodawane tylko przez zalogowanych użytkowników. <a href="{{ path('fos_user_security_login') }}">Zaloguj się</a></p>
+
+        {% endif %}
 
         {% for comment in post.comments %}
             <p>{{ comment.content }}</p>
-            <span>Dodano {{ comment.createdAt|date('H:i d/m/Y') }}</span>
+            <span>Dodano {{ comment.createdAt|date('H:i d/m/Y') }} {% if comment.user %} przez: {{ comment.user }} {% endif %}</span>
         {% endfor %}
 
          <hr/>
