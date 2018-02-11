@@ -1,0 +1,33 @@
+$ alias sf="php app/console"
+
+php bin/console doctrine:generate:entity  //tworzenie encji
+
+php bin/console doctrine:schema:update   // synchronizacja bazy i encji
+
+php bin/console doctrine:schema:update --dump-sql   //sprawdzenie opcji dostepnych,pojawiaja sie kody sql
+
+php bin/console doctrine:schema:update --force  //uruchomienie tego co w poprzednim jesli jest co czyli create na baze
+
+php bin/console list doctrine
+
+
+php bin/console doctrine:fixtures:load   //zaladowanie danych do bazy
+
+
+
+php bin/console doctrine:generate:form  //wygenerowanie formularza
+
+
+php bin/console doctrine:generate:entities AppBundle:Comment //generuje settery i gettey 
+php bin/console doctrine:generate:entities AppBundle:Post //generuje settery i gettey 
+
+php bin/console doctrine:generate:entity  //tworzenie encji
+
+php bin/console doctrine:schema:update //synchro
+php bin/console doctrine:schema:update --dump-sql 
+php bin/console doctrine:schema:update --force
+php bin/console doctrine:generate:entities AppBundle:User
+
+php bin/console debug:router -e prod
+
+php bin/console fos:user:create //tworzenie uzytkownika
