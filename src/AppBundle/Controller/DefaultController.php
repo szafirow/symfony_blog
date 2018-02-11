@@ -21,7 +21,10 @@ class DefaultController extends Controller
             ->getManager()
             ->createQueryBuilder()
             ->from('AppBundle:Post', 'p')
-            ->select('p');
+            ->select('p')
+            ->orderBy('p.createdAt', 'ASC');
+
+
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

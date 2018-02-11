@@ -51,6 +51,11 @@ class Comment
      */
     private $user;
 
+    public function __toString()
+    {
+        return $this->content;
+    }
+
 
     public function __construct()
     {

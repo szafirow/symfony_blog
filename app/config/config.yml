@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi: ~
-    translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: [ "en" ] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -35,7 +35,7 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-
+    cache:  false
     form_themes: ['bootstrap_4_layout.html.twig']
 
     #form:
@@ -114,3 +114,9 @@ fos_user:
             template: '@FOSUser/Resetting/email.txt.twig'
     group:
         group_class: FosSf3\MainBundle\Entity\Group
+
+
+easy_admin:
+    entities:
+      - AppBundle\Entity\Post
+      - AppBundle\Entity\Comment
